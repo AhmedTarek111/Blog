@@ -8,7 +8,9 @@
 <body>
         <p>{{post_details.content}}</p>
         <p>{{post_details.create_date}}</p>
-        <p>{{post_details.tags}}</p>
+        {% for tag in post_details.tags.all %}
+            <p>{{tag}}</p>
+        {% endfor %}
         <p>{{post_details.author}}</p>
         <img src="{{post_details.image.url}}"></img>
 
