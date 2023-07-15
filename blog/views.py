@@ -13,6 +13,8 @@ def add_new_post(request):
     if request.method == 'POST':
         form=Postform(request.POST,request.FILES)
         if form.is_valid():
+            form.save(commit=False)        
+            author=request.user
             form.save()        
             return redirect('/blog')
     else:
@@ -29,4 +31,7 @@ def edit_post(request,post_id):
         form=Postform(instance=data)
     return render(request,'edit_post.html',{'form':form})
     
+def delete_post(request,post_id):
+        delete= Post.objects.get(id=post_id).delete()
+        return render(request,'delete_post.html',{'delete':delete})
 
