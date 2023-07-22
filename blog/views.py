@@ -39,10 +39,13 @@ def add_new_post(request):
     else:
         form=Postform()
     return render(request,'add_newpost.html',{'form':form})
-#---------------------------------------------------
 
 #class based views
-
+class AddPost(CreateView):
+    model = Post
+    template_name ="blog/add_newpost.html"
+    fields='__all__'
+#---------------------------------------------------
 
 def edit_post(request,post_id):
     data= Post.objects.get(id=post_id)
