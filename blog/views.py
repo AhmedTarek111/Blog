@@ -12,21 +12,23 @@ def post_list(request):
 #class based views
 class Post_list(ListView):
     model=Post
+    context_object_name ='all_posts'
+
 #---------------------------------------------------
-#all post details 
-# function
+# post details 
+#   function
 def all_post_details(request,post_id):
     data= Post.objects.get(id=post_id)
     return render (request,'post_details.html',{'post_details':data})
 
-#class based views 
+#   class based views 
 class Post_detalis(DetailView):
     model = Post
     template_name ="blog/post_details.html"
     context_object_name ='post_details'
 #---------------------------------------------------
 
-
+#add post
 # function 
 def add_new_post(request):
     if request.method == 'POST':
@@ -48,6 +50,8 @@ class AddPost(CreateView):
     success_url ='/blog/'
 #---------------------------------------------------
 
+#edit post
+#function 
 def edit_post(request,post_id):
     data= Post.objects.get(id=post_id)
     if request.method == 'POST':
@@ -60,13 +64,19 @@ def edit_post(request,post_id):
 #class based views
 class EditPost(UpdateView):
     model =Post
-    template_name ='blog/add_newpost.html'
+    template_name ='blog/edit_post.html'
     fields =['title','content','create_date','draft','tags','image','author']
     success_url ='/blog/'
 #---------------------------------------------------
+#delete 
+#function 
 
 def delete_post(request,post_id):
         delete= Post.objects.get(id=post_id).delete()
         return render(request,'delete_post.html',{'delete':delete})
 
 #class based views
+class Delete_post(DeleteView):
+    model =Post
+    success_url ='/blog/'
+#---------------------------------------------------

@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts</title>
-</head>
-<body>
-    <h1>welcome to the posts page</h1>
-    <hr>
-    {% for post in post_list %}
-    <p>
-        <a href="{{post.id}}">{{post}}</a>
-    </p>
-    {% endfor %}
-</body>
-</html>
+{% for post in all_posts %}
+   <p> 
+    <a href="{{post.id}}/">{{post}}</a>
+</p>
+{% endfor %}    
+   
