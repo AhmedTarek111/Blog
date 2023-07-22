@@ -18,14 +18,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import Post_list,Post_detalis,AddPost,edit_post,delete_post
+from blog.views import Post_list,Post_detalis,AddPost,EditPost,delete_post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/',Post_list.as_view()),
     path('blog/<int:pk>/',Post_detalis.as_view()),
     path('blog/add/',AddPost.as_view()),
-    path('blog/<int:post_id>/edit/',edit_post),
+    path('blog/<int:pk>/edit/',EditPost.as_view()),
     path('blog/<int:post_id>/delete/',delete_post ),
     
 ] 

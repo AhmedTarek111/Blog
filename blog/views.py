@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Post
 from .forms import Postform
-from django.views.generic import ListView,DetailView,DeleteView,CreateView
+from django.views.generic import ListView,DetailView,DeleteView,CreateView,UpdateView
 
 # all posts
 # function 
@@ -45,6 +45,7 @@ class AddPost(CreateView):
     model = Post
     template_name ="blog/add_newpost.html"
     fields='__all__'
+    success_url ='/blog/'
 #---------------------------------------------------
 
 def edit_post(request,post_id):
@@ -56,7 +57,14 @@ def edit_post(request,post_id):
     else:
         form=Postform(instance=data)
     return render(request,'edit_post.html',{'form':form})
-    
+#class based views
+class EditPost(UpdateView):
+    model =Post
+    template_name ='blog/add_newpost.html'
+    fields =['title','content','create_date','draft','tags','image','author']
+    success_url ='/blog/'
+#---------------------------------------------------
+
 def delete_post(request,post_id):
         delete= Post.objects.get(id=post_id).delete()
         return render(request,'delete_post.html',{'delete':delete})
