@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-from .models import Post
-from .forms import Postform
-from django.views.generic import ListView,DetailView,DeleteView,CreateView,UpdateView
+from .models import Post,Comment
+from .forms import Postform,CommentForm
+from django.views.generic import ListView,DeleteView,CreateView,UpdateView
 
 # all posts
 # function 
@@ -17,15 +17,21 @@ class Post_list(ListView):
 #---------------------------------------------------
 # post details 
 #   function
-def all_post_details(request,post_id):
-    data= Post.objects.get(id=post_id)
-    return render (request,'post_details.html',{'post_details':data})
+def Post_detalis(request,pk):
+    data = Post.objects.get(id=pk)
+    comments = Comment.objects.all()
+    if request.method =='POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            myform=form.save(commit=False)
+            myform.user = request.user
+            myform.post = data
+            myform.save()
+    else:
+        form = CommentForm()
+    return render(request,'blog/post_details.html', {"post_details":data , "comments":comments , "comment_form":form})
 
-#   class based views 
-class Post_detalis(DetailView):
-    model = Post
-    template_name ="blog/post_details.html"
-    context_object_name ='post_details'
+
 #---------------------------------------------------
 
 #add post
@@ -52,8 +58,8 @@ class AddPost(CreateView):
 
 #edit post
 #function 
-def edit_post(request,post_id):
-    data= Post.objects.get(id=post_id)
+def edit_post(request,pk):
+    data= Post.objects.get(id=pk)
     if request.method == 'POST':
         form=Postform(request.POST,request.FILES, instance=data)
         if form.is_valid():
@@ -71,8 +77,8 @@ class EditPost(UpdateView):
 #delete 
 #function 
 
-def delete_post(request,post_id):
-        delete= Post.objects.get(id=post_id).delete()
+def delete_post(request,pk):
+        delete= Post.objects.get(id=pk).delete()
         return render(request,'delete_post.html',{'delete':delete})
 
 #class based views

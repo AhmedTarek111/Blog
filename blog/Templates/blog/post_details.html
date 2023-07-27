@@ -13,7 +13,21 @@
         {% endfor %}
         <p>{{post_details.author}}</p>
         <img src="{{post_details.image.url}}"></img>
-
+        
+        <hr>
+        <label for="c">comments : </label>
+        <ul id="c">
+            {% for comment in comments %}
+                <li>{{comment.comment}}</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{comment_form}}
+            <input type="submit" value="submit">
+        </form>
         
 </body>
 </html>
