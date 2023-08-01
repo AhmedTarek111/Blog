@@ -1,6 +1,55 @@
-{% for post in all_posts %}
-   <p> 
-    <a href="{{post.id}}/">{{post}}</a>
-</p>
-{% endfor %}    
-   
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
+    <title>Posts</title>
+</head>
+<body>
+    <!-- start nav -->
+        <nav class="navbar navbar-expand-lg bg-secondary ">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="#">MyBlog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="/blog/add/" type="button" class="btn btn-success">Create New Post</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex mx-auto" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-light" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+ <div class="container">
+     <div class="row mt-4">
+         {% for post in all_posts %}
+         <div class="col-lg-3">
+             <div class="card" >
+                 <img src="{{post.image.url}}" class="card-img-top" alt="...">
+                 <div class="card-body">
+                     <h5 class="card-title">{{post.title}}</h5>
+                     <p class="card-text">{{post.content | safe}}</p>
+                     <a href="/blog/{{post.id}}/edit/" class="btn btn-warning">Edit</a>
+                     <a href="/blog/{{post.id}}/delete/" class="btn btn-danger">Delete</a>
+                     <a href="/blog/{{post.id}}/" class="btn btn-info">Details</a>
+                 </div>
+             </div>
+         </div>
+         {% endfor %}
+     </div>
+ </div>
+ 
+
+        </div>
+    <!-- end nav -->
+    <script src="{% static 'bootstrap-5.3.1-dist/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

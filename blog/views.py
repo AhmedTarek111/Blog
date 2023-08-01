@@ -1,15 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import Post,Comment
 from .forms import Postform,CommentForm
-from django.views.generic import ListView,DeleteView,CreateView,UpdateView
+from django.views.generic import ListView,DeleteView,CreateView
 
 # all posts
-# function 
-def post_list(request):
-    data= Post.objects.all()
-    return render(request,'post_list.html',{'Posts':data})
-
-#class based views
 class Post_list(ListView):
     model=Post
     context_object_name ='all_posts'
@@ -35,19 +29,6 @@ def Post_detalis(request,pk):
 #---------------------------------------------------
 
 #add post
-# function 
-def add_new_post(request):
-    if request.method == 'POST':
-        form=Postform(request.POST,request.FILES)
-        if form.is_valid():
-            form.save(commit=False)        
-            author=request.user
-            form.save()        
-            return redirect('/blog')
-    else:
-        form=Postform()
-    return render(request,'add_newpost.html',{'form':form})
-
 #class based views
 class AddPost(CreateView):
     model = Post
@@ -64,23 +45,14 @@ def edit_post(request,pk):
         form=Postform(request.POST,request.FILES, instance=data)
         if form.is_valid():
             form.save()
+  
     else:
         form=Postform(instance=data)
-    return render(request,'edit_post.html',{'form':form})
-#class based views
-class EditPost(UpdateView):
-    model =Post
-    template_name ='blog/edit_post.html'
-    fields =['title','content','create_date','draft','tags','image','author']
-    success_url ='/blog/'
+
+    return render(request,'blog/edit_post.html',{'form':form })
+
 #---------------------------------------------------
 #delete 
-#function 
-
-def delete_post(request,pk):
-        delete= Post.objects.get(id=pk).delete()
-        return render(request,'delete_post.html',{'delete':delete})
-
 #class based views
 class Delete_post(DeleteView):
     model =Post

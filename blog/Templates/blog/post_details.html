@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-        <p>{{post_details.content}}</p>
+        <p>{{post_details.content|safe }}</p>
         <p>{{post_details.create_date}}</p>
         {% for tag in post_details.tags.all %}
             <p>{{tag}}</p>

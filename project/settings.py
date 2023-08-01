@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     'blog',
     'taggit',
     'django_summernote',
+     'crispy_forms',
+     'bootstrap5form',
+     'django_bootstrap5',
+     
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

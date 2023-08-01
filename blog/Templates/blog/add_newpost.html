@@ -1,5 +1,31 @@
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="add">
-</form>
+{% load static %}
+{% load bootstrap5form %}
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.1-dist/css/bootstrap.min.css' %}">
+    <title>Add Post</title>
+
+    <title>Document</title>
+</head>
+<body>
+ 
+    <div class="container">
+        <div class="row mx-auto">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    {{ form|bootstrap5form }}
+                    {% bootstrap_button button_type="submit" content="save Changes" %}
+                </form>
+            
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'bootstrap-5.3.1-dist/js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>
