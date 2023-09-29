@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'taggit',
     'django_summernote',
      'crispy_forms',
-     'bootstrap5form',
      'django_bootstrap5',
+     'bootstrap5form',
      
 ]
 
